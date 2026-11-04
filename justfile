@@ -1,23 +1,20 @@
-purs_args := "--stash --censor-lib --censor-codes=WildcardInferredType,ImplicitQualifiedImport,HidingImport"
-cfg_test := "--config test.dhall"
-
 build-strict:
-    spago build --purs-args "--strict {{purs_args}}"
+    spago build --strict
 
 build:
-    spago build --purs-args "{{purs_args}}"
+    spago build
 
 test-strict:
-    spago {{cfg_test}} test --purs-args "--strict {{purs_args}}"
+    spago test --strict
 
 test:
-    spago {{cfg_test}} test --purs-args "{{purs_args}}"
+    spago test
 
 clean:
     rm -rf .spago output .psa-stash
 
 ide:
-    spago {{cfg_test}} test --purs-args "{{purs_args}} --json-errors"
+    spago test --json-errors
 
 format:
     purs-tidy format-in-place 'src/**/*.purs'
@@ -42,4 +39,4 @@ suggest-apply:
     just ide 2>&1 | ps-suggest --apply
 
 gen-purs-docs:
-    FILE=.spago/package.json; echo '{}' > $FILE; spago docs; echo '{"type": "module"}' > $FILE
+    spago docs
